@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trestin George</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+html{
+  height:100%;
+  scroll-behavior:smooth;
+  scroll-snap-type:y mandatory;
+}
+body{
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  background:#000;
+  color:#fff;
+  height:100%;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:2rem 4rem;
+  mix-blend-mode:normal;
+}
+.nav-logo{
+  font-size:.55rem;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);font-weight:300;
+}
+.nav-links{display:flex;gap:3.5rem;list-style:none}
+.nav-links a{
+  font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);text-decoration:none;font-weight:300;
+  transition:color .4s;
+}
+.nav-links a:hover{color:rgba(255,255,255,.75)}
+
+/* ── SECTIONS ── */
+section{
+  position:relative;width:100vw;height:100vh;
+  scroll-snap-align:start;overflow:hidden;
+}
+
+/* ── ANIMATED VIDEO PLACEHOLDER BG ── */
+.vbg{
+  position:absolute;inset:0;z-index:0;
+  animation:breathe 12s ease-in-out infinite alternate;
+}
+@keyframes breathe{
+  from{transform:scale(1);filter:brightness(1)}
+  to{transform:scale(1.05);filter:brightness(.88)}
+}
+
+/* Film grain */
+.grain{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+  animation:grain .18s steps(1) infinite;
+}
+@keyframes grain{
+  0%  {background-position:0 0}
+  10% {background-position:-15% -10%}
+  20% {background-position:10% 8%}
+  30% {background-position:-8% 15%}
+  40% {background-position:5% -12%}
+  50% {background-position:-12% 4%}
+  60% {background-position:8% -6%}
+  70% {background-position:-5% 12%}
+  80% {background-position:15% -3%}
+  90% {background-position:-3% 9%}
+}
+
+/* Bottom cinematic fade */
+.fade-up{
+  position:absolute;bottom:0;left:0;right:0;height:68%;z-index:3;
+  background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.35) 55%,transparent 100%);
+}
+
+/* Subtle video-label watermark */
+.vid-label{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:.42rem;letter-spacing:.7em;text-transform:uppercase;
+  color:rgba(255,255,255,.04);z-index:1;pointer-events:none;white-space:nowrap;
+}
+
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+#hero .vbg{
+  background:
+    radial-gradient(ellipse 90% 70% at 55% 40%,rgba(18,18,38,.7) 0%,transparent 65%),
+    radial-gradient(ellipse 60% 60% at 20% 80%,rgba(8,5,15,.9) 0%,transparent 60%),
+    linear-gradient(170deg,#060609 0%,#0d0d1e 45%,#080808 100%);
+}
+
+/* Subtle warm glow bottom-right — makes the dark name legible */
+.hero-light{
+  position:absolute;bottom:0;right:0;
+  width:50%;height:42%;
+  background:radial-gradient(ellipse at 85% 90%,rgba(215,205,185,.1) 0%,transparent 65%);
+  z-index:4;pointer-events:none;
+}
+
+.hero-name{
+  position:absolute;bottom:8vh;right:5.5vw;
+  text-align:right;z-index:10;
+  opacity:0;
+  animation:fadeUp 2.2s cubic-bezier(.22,1,.36,1) 1.8s forwards;
+}
+.hero-name h1{
+  font-size:clamp(3rem,6.5vw,8rem);
+  font-weight:200;letter-spacing:.07em;line-height:.9;
+  color:rgba(12,10,8,.82);/* Black letters, as requested */
+  font-style:normal;
+}
+.hero-name .hn-sub{
+  margin-top:.9rem;
+  font-size:.52rem;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(12,10,8,.4);font-weight:300;
+}
+
+.scroll-cue{
+  position:absolute;bottom:3.5vh;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:fadeIn 1s 3.8s forwards;
+}
+.scroll-cue .sc-line{
+  width:1px;height:38px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);
+}
+.scroll-cue span{
+  font-size:.42rem;letter-spacing:.55em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+}
+
+
+/* ══════════════════════════════
+   FILM SECTIONS
+══════════════════════════════ */
+.film-overlay{
+  position:absolute;inset:0;z-index:5;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 5.5vw 7.5vh;
+}
+
+/* Film text — left side */
+.film-info{
+  opacity:0;transform:translateY(28px);
+  transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);
+  max-width:58%;
+}
+.film-info.in{opacity:1;transform:translateY(0)}
+
+.f-year{
+  font-size:.52rem;letter-spacing:.55em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);margin-bottom:1.1rem;font-weight:300;
+}
+.f-title{
+  font-size:clamp(2.5rem,5.5vw,7rem);
+  font-weight:200;line-height:.9;color:#fff;
+  letter-spacing:.03em;margin-bottom:1.3rem;
+}
+.f-char{
+  font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);font-weight:300;
+}
+.f-role{
+  font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.22);margin-top:.35rem;
+}
+
+/* Awards — right side */
+.film-badges{
+  display:flex;flex-direction:column;align-items:flex-end;gap:1.6rem;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 1.2s cubic-bezier(.22,1,.36,1) .3s,transform 1.2s cubic-bezier(.22,1,.36,1) .3s;
+}
+.film-badges.in{opacity:1;transform:translateY(0)}
+
+.bdg{width:90px;height:90px;flex-shrink:0}
+
+/* Film-specific backgrounds */
+#fruitvale .vbg{
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 35%,rgba(80,28,4,.55) 0%,transparent 70%),
+    linear-gradient(165deg,#110700 0%,#2c1100 45%,#090600 100%);
+}
+#wakanda .vbg{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%,rgba(28,4,75,.6) 0%,transparent 70%),
+    linear-gradient(165deg,#03000d 0%,#100028 45%,#000a14 100%);
+}
+#eightmin .vbg{
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 35%,rgba(4,35,55,.6) 0%,transparent 70%),
+    linear-gradient(165deg,#00080f 0%,#001a2e 45%,#04000a 100%);
+}
+
+
+/* ══════════════════════════════
+   RESUME
+══════════════════════════════ */
+#resume .vbg{
+  background:linear-gradient(165deg,#040408 0%,#08080f 50%,#040407 100%);
+}
+.resume-photo{
+  position:absolute;right:0;top:0;
+  width:52%;height:100%;z-index:1;
+  background:
+    linear-gradient(to left,rgba(4,4,8,1) 0%,rgba(4,4,8,0) 40%),
+    linear-gradient(165deg,#101018 0%,#0a0a14 100%);
+  overflow:hidden;
+}
+.resume-photo::after{
+  content:'PHOTO PLACEHOLDER';
+  position:absolute;top:50%;left:55%;transform:translate(-50%,-50%);
+  font-size:.4rem;letter-spacing:.6em;color:rgba(255,255,255,.05);
+}
+
+.resume-text{
+  position:absolute;left:5.5vw;top:50%;
+  transform:translateY(-50%) translateX(-18px);
+  z-index:10;width:43%;
+  opacity:0;
+  transition:opacity 1s cubic-bezier(.22,1,.36,1),
+             transform 1s cubic-bezier(.22,1,.36,1);
+}
+.resume-text.in{opacity:1;transform:translateY(-50%) translateX(0)}
+
+.r-name{
+  font-size:clamp(1.6rem,2.4vw,3rem);font-weight:200;
+  letter-spacing:.12em;color:#fff;margin-bottom:.4rem;
+}
+.r-union{
+  font-size:.52rem;letter-spacing:.45em;text-transform:uppercase;
+  color:rgba(255,255,255,.28);margin-bottom:2.4rem;
+}
+.r-rule{width:32px;height:1px;background:rgba(255,255,255,.14);margin-bottom:2.2rem}
+
+.r-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem}
+.r-stat label{
+  display:block;font-size:.42rem;letter-spacing:.45em;
+  text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:.3rem;
+}
+.r-stat span{font-size:.68rem;font-weight:300;color:rgba(255,255,255,.52)}
+
+.r-sec{margin-bottom:1.7rem}
+.r-sec-head{
+  font-size:.44rem;letter-spacing:.55em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);margin-bottom:.9rem;font-weight:400;
+}
+.r-credit{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:.48rem;gap:1rem;
+}
+.rc-t{font-size:.68rem;font-weight:300;color:rgba(255,255,255,.78);flex:1;min-width:0}
+.rc-r{font-size:.55rem;color:rgba(255,255,255,.33);white-space:nowrap}
+.rc-y{font-size:.55rem;color:rgba(255,255,255,.2);white-space:nowrap;min-width:2.8rem;text-align:right}
+
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{
+  from{opacity:0}to{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">TG</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Reel</a></li>
+    <li><a href="#fruitvale">Film</a></li>
+    <li><a href="#resume">Résumé</a></li>
+    <li><a href="mailto:booking@trestingeorge.com">Contact</a></li>
+  </ul>
+</nav>
+
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section id="hero">
+  <div class="vbg"></div>
+  <div class="grain"></div>
+  <div class="fade-up"></div>
+  <div class="hero-light"></div>
+  <div class="vid-label">Full Reel Video Placeholder</div>
+
+  <div class="hero-name">
+    <h1>Trestin<br>George</h1>
+    <div class="hn-sub">Actor &nbsp;·&nbsp; SAG-AFTRA</div>
+  </div>
+
+  <div class="scroll-cue">
+    <div class="sc-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+
+<!-- ════════════════════ FRUITVALE STATION ════════════════════ -->
+<section id="fruitvale">
+  <div class="vbg"></div>
+  <div class="grain"></div>
+  <div class="fade-up"></div>
+  <div class="vid-label">Fruitvale Station — Clip Placeholder</div>
+
+  <div class="film-overlay">
+
+    <div class="film-info" data-obs>
+      <div class="f-year">2013</div>
+      <div class="f-title">Fruitvale<br>Station</div>
+      <div class="f-char">Coliseum Patron</div>
+      <div class="f-role">Feature Film &nbsp;·&nbsp; Ryan Coogler</div>
+    </div>
+
+    <div class="film-badges" data-obs>
+
+      <!-- Sundance Grand Jury Prize -->
+      <svg class="bdg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke-width=".8">
+          <line x1="22" y1="28" x2="22" y2="70" stroke="rgba(255,255,255,.45)"/>
+          <ellipse cx="15" cy="36" rx="8" ry="3.5" transform="rotate(-30 15 36)" fill="rgba(255,255,255,.32)"/>
+          <ellipse cx="13" cy="46" rx="8" ry="3.5" transform="rotate(-42 13 46)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="14" cy="56" rx="8" ry="3.5" transform="rotate(-138 14 56)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="18" cy="65" rx="8" ry="3.5" transform="rotate(-148 18 65)" fill="rgba(255,255,255,.28)"/>
+          <line x1="78" y1="28" x2="78" y2="70" stroke="rgba(255,255,255,.45)"/>
+          <ellipse cx="85" cy="36" rx="8" ry="3.5" transform="rotate(30 85 36)" fill="rgba(255,255,255,.32)"/>
+          <ellipse cx="87" cy="46" rx="8" ry="3.5" transform="rotate(42 87 46)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="86" cy="56" rx="8" ry="3.5" transform="rotate(138 86 56)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="82" cy="65" rx="8" ry="3.5" transform="rotate(148 82 65)" fill="rgba(255,255,255,.28)"/>
+        </g>
+        <text x="50" y="32" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="5.5" fill="rgba(255,255,255,.8)" letter-spacing="2.5" font-weight="300">SUNDANCE</text>
+        <text x="50" y="41" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4.5" fill="rgba(255,255,255,.5)" letter-spacing="1.5" font-weight="300">FILM FESTIVAL</text>
+        <text x="50" y="55" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="8" fill="rgba(255,255,255,.92)" font-weight="400">GRAND JURY</text>
+        <text x="50" y="66" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="6.5" fill="rgba(255,255,255,.7)" letter-spacing=".5" font-weight="300">PRIZE · 2013</text>
+      </svg>
+
+      <!-- Cannes Un Certain Regard Jury Prize -->
+      <svg class="bdg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Simplified Palme fronds -->
+        <g fill="rgba(255,255,255,.48)" stroke="none">
+          <ellipse cx="50" cy="28" rx="2.8" ry="11"/>
+          <ellipse cx="50" cy="28" rx="2.8" ry="11" transform="rotate(22 50 50)"/>
+          <ellipse cx="50" cy="28" rx="2.8" ry="11" transform="rotate(-22 50 50)"/>
+          <ellipse cx="50" cy="28" rx="2.8" ry="11" transform="rotate(44 50 50)"/>
+          <ellipse cx="50" cy="28" rx="2.8" ry="11" transform="rotate(-44 50 50)"/>
+        </g>
+        <line x1="50" y1="44" x2="50" y2="56" stroke="rgba(255,255,255,.4)" stroke-width="1.2"/>
+        <text x="50" y="65" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="6" fill="rgba(255,255,255,.78)" letter-spacing="2" font-weight="300">CANNES</text>
+        <text x="50" y="75" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4.2" fill="rgba(255,255,255,.5)" letter-spacing="1" font-weight="300">UN CERTAIN REGARD</text>
+        <text x="50" y="84" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4.5" fill="rgba(255,255,255,.38)" letter-spacing="1">JURY PRIZE · 2013</text>
+      </svg>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════ WAKANDA FOREVER ════════════════════ -->
+<section id="wakanda">
+  <div class="vbg"></div>
+  <div class="grain"></div>
+  <div class="fade-up"></div>
+  <div class="vid-label">Black Panther: Wakanda Forever — Clip Placeholder</div>
+
+  <div class="film-overlay">
+
+    <div class="film-info" data-obs>
+      <div class="f-year">2022</div>
+      <div class="f-title">Black Panther:<br>Wakanda Forever</div>
+      <div class="f-char">Wakandan Warrior</div>
+      <div class="f-role">Marvel Studios · Feature Film</div>
+    </div>
+
+    <div class="film-badges" data-obs>
+
+      <!-- NAACP Image Award -->
+      <svg class="bdg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="43" fill="none" stroke="rgba(255,255,255,.38)" stroke-width=".7"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,.18)" stroke-width=".4"/>
+        <text x="50" y="36" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="6.5" fill="rgba(255,255,255,.82)" letter-spacing="2.5" font-weight="400">NAACP</text>
+        <text x="50" y="47" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4.5" fill="rgba(255,255,255,.5)" letter-spacing="1.5" font-weight="300">IMAGE AWARD</text>
+        <text x="50" y="61" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="rgba(255,255,255,.94)" font-weight="400">WINNER</text>
+        <text x="50" y="73" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4" fill="rgba(255,255,255,.38)" letter-spacing="1" font-weight="300">OUTSTANDING FILM</text>
+        <text x="50" y="83" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4.5" fill="rgba(255,255,255,.3)" letter-spacing="1">2023</text>
+      </svg>
+
+      <!-- Saturn Award -->
+      <svg class="bdg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="40" r="16" fill="none" stroke="rgba(255,255,255,.62)" stroke-width="1.1"/>
+        <ellipse cx="50" cy="42" rx="32" ry="7.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width=".9"/>
+        <text x="50" y="72" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="6" fill="rgba(255,255,255,.72)" letter-spacing="2" font-weight="300">SATURN</text>
+        <text x="50" y="80" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="5" fill="rgba(255,255,255,.5)" letter-spacing=".5" font-weight="300">AWARD</text>
+        <text x="50" y="89" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="3.8" fill="rgba(255,255,255,.32)" letter-spacing="1">BEST SUPERHERO FILM</text>
+      </svg>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════ 8 MINUTES ════════════════════ -->
+<section id="eightmin">
+  <div class="vbg"></div>
+  <div class="grain"></div>
+  <div class="fade-up"></div>
+  <div class="vid-label">8 Minutes — Clip Placeholder</div>
+
+  <div class="film-overlay">
+
+    <div class="film-info" data-obs>
+      <div class="f-year">2015</div>
+      <div class="f-title">8<br>Minutes</div>
+      <div class="f-char">Marcus</div>
+      <div class="f-role">Feature Film</div>
+    </div>
+
+    <div class="film-badges" data-obs>
+
+      <!-- Festival Award Laurel -->
+      <svg class="bdg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke-width=".8">
+          <line x1="22" y1="28" x2="22" y2="70" stroke="rgba(255,255,255,.45)"/>
+          <ellipse cx="15" cy="36" rx="8" ry="3.5" transform="rotate(-30 15 36)" fill="rgba(255,255,255,.32)"/>
+          <ellipse cx="13" cy="46" rx="8" ry="3.5" transform="rotate(-42 13 46)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="14" cy="56" rx="8" ry="3.5" transform="rotate(-138 14 56)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="18" cy="65" rx="8" ry="3.5" transform="rotate(-148 18 65)" fill="rgba(255,255,255,.28)"/>
+          <line x1="78" y1="28" x2="78" y2="70" stroke="rgba(255,255,255,.45)"/>
+          <ellipse cx="85" cy="36" rx="8" ry="3.5" transform="rotate(30 85 36)" fill="rgba(255,255,255,.32)"/>
+          <ellipse cx="87" cy="46" rx="8" ry="3.5" transform="rotate(42 87 46)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="86" cy="56" rx="8" ry="3.5" transform="rotate(138 86 56)" fill="rgba(255,255,255,.28)"/>
+          <ellipse cx="82" cy="65" rx="8" ry="3.5" transform="rotate(148 82 65)" fill="rgba(255,255,255,.28)"/>
+        </g>
+        <text x="50" y="34" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4.8" fill="rgba(255,255,255,.72)" letter-spacing="2" font-weight="300">FESTIVAL</text>
+        <text x="50" y="44" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="4.2" fill="rgba(255,255,255,.48)" letter-spacing="1.5" font-weight="300">AWARD</text>
+        <text x="50" y="57" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="rgba(255,255,255,.92)" font-weight="400">BEST</text>
+        <text x="50" y="68" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="6.5" fill="rgba(255,255,255,.65)" font-weight="300">PICTURE</text>
+      </svg>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════ RÉSUMÉ ════════════════════ -->
+<section id="resume">
+  <div class="vbg"></div>
+  <div class="grain"></div>
+  <div class="resume-photo"></div>
+
+  <div class="resume-text" data-obs>
+
+    <div class="r-name">Trestin George</div>
+    <div class="r-union">SAG-AFTRA &nbsp;·&nbsp; Los Angeles, CA</div>
+    <div class="r-rule"></div>
+
+    <div class="r-stats">
+      <div class="r-stat"><label>Height</label><span>5'9"</span></div>
+      <div class="r-stat"><label>Weight</label><span>179 lbs</span></div>
+      <div class="r-stat"><label>Eyes</label><span>Brown</span></div>
+      <div class="r-stat"><label>Hair</label><span>Black</span></div>
+    </div>
+
+    <div class="r-sec">
+      <div class="r-sec-head">Film</div>
+      <div class="r-credit"><span class="rc-t">Freaky Tales</span><span class="rc-r">Malik</span><span class="rc-y">2024</span></div>
+      <div class="r-credit"><span class="rc-t">Black Panther: Wakanda Forever</span><span class="rc-r">Wakandan Warrior</span><span class="rc-y">2022</span></div>
+      <div class="r-credit"><span class="rc-t">8 Minutes</span><span class="rc-r">Marcus</span><span class="rc-y">2015</span></div>
+      <div class="r-credit"><span class="rc-t">Fruitvale Station</span><span class="rc-r">Coliseum Patron</span><span class="rc-y">2013</span></div>
+      <div class="r-credit"><span class="rc-t">The Trestin George Story</span><span class="rc-r">Himself · Documentary</span><span class="rc-y">2006</span></div>
+    </div>
+
+    <div class="r-sec">
+      <div class="r-sec-head">Television</div>
+      <div class="r-credit"><span class="rc-t">Murder in the First</span><span class="rc-r">Guest Star</span><span class="rc-y">2014</span></div>
+    </div>
+
+    <div class="r-sec">
+      <div class="r-sec-head">Athletics</div>
+      <div class="r-credit"><span class="rc-t">Jacksonville Jaguars</span><span class="rc-r">Defensive Back · NFL</span><span class="rc-y">2006</span></div>
+      <div class="r-credit"><span class="rc-t">BC Lions</span><span class="rc-r">Defensive Back · CFL</span><span class="rc-y">2009–10</span></div>
+      <div class="r-credit"><span class="rc-t">San Jose SaberCats</span><span class="rc-r">AFL Champion</span><span class="rc-y">2007–11</span></div>
+    </div>
+
+    <div class="r-sec">
+      <div class="r-sec-head">Training</div>
+      <div class="r-credit"><span class="rc-t">San Jose State University</span><span class="rc-r">B.S. Kinesiology</span><span class="rc-y"></span></div>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+  // Scroll-triggered fade-ins
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        // small stagger for sibling pairs in same section
+        e.target.classList.add('in');
+      }
+    });
+  }, { threshold: 0.18 });
+
+  document.querySelectorAll('[data-obs]').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
