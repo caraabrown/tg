@@ -46,7 +46,26 @@ section{
   scroll-snap-align:start;overflow:hidden;
 }
 
-/* ── ANIMATED VIDEO PLACEHOLDER BG ── */
+/* ── YOUTUBE BACKGROUND ── */
+.yt-wrap{
+  position:absolute;inset:0;z-index:0;overflow:hidden;
+  background:#000;
+}
+.yt-wrap iframe{
+  position:absolute;
+  top:50%;left:50%;
+  /* 16:9: ensure full coverage */
+  width:100vw;
+  height:56.25vw;
+  min-height:100vh;
+  min-width:177.78vh;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  border:none;
+  opacity:.75;
+}
+
+/* ── ANIMATED VIDEO PLACEHOLDER BG (fallback only) ── */
 .vbg{
   position:absolute;inset:0;z-index:0;
   animation:breathe 12s ease-in-out infinite alternate;
@@ -77,29 +96,29 @@ section{
   90% {background-position:-3% 9%}
 }
 
-/* Bottom cinematic fade */
+/* Bottom cinematic fade — heavier over real video */
 .fade-up{
-  position:absolute;bottom:0;left:0;right:0;height:68%;z-index:3;
-  background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.35) 55%,transparent 100%);
+  position:absolute;bottom:0;left:0;right:0;height:75%;z-index:3;
+  background:linear-gradient(to top,rgba(0,0,0,.97) 0%,rgba(0,0,0,.5) 50%,transparent 100%);
 }
 
-/* Subtle video-label watermark */
-.vid-label{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  font-size:.42rem;letter-spacing:.7em;text-transform:uppercase;
-  color:rgba(255,255,255,.04);z-index:1;pointer-events:none;white-space:nowrap;
+/* Film-specific dark tints sit over the iframe for color signature */
+#fruitvale .yt-wrap::after,
+#wakanda .yt-wrap::after,
+#eightmin .yt-wrap::after,
+#freakytales .yt-wrap::after,
+#locks .yt-wrap::after,
+#olde .yt-wrap::after,
+#hero .yt-wrap::after{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
 }
-
-
-/* ══════════════════════════════
-   HERO
-══════════════════════════════ */
-#hero .vbg{
-  background:
-    radial-gradient(ellipse 90% 70% at 55% 40%,rgba(18,18,38,.7) 0%,transparent 65%),
-    radial-gradient(ellipse 60% 60% at 20% 80%,rgba(8,5,15,.9) 0%,transparent 60%),
-    linear-gradient(170deg,#060609 0%,#0d0d1e 45%,#080808 100%);
-}
+#hero .yt-wrap::after        {background:rgba(0,0,10,.18)}
+#fruitvale .yt-wrap::after   {background:rgba(20,5,0,.22)}
+#wakanda .yt-wrap::after     {background:rgba(5,0,20,.22)}
+#eightmin .yt-wrap::after    {background:rgba(0,8,18,.22)}
+#freakytales .yt-wrap::after {background:rgba(18,0,0,.22)}
+#locks .yt-wrap::after       {background:rgba(10,8,0,.22)}
+#olde .yt-wrap::after        {background:rgba(0,10,5,.22)}
 
 /* Subtle warm glow bottom-right — makes the dark name legible */
 .hero-light{
@@ -188,38 +207,6 @@ section{
 .bdg{width:90px;height:90px;flex-shrink:0}
 
 /* Film-specific backgrounds */
-#freakytales .vbg{
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 30%,rgba(65,8,8,.65) 0%,transparent 70%),
-    linear-gradient(165deg,#0d0000 0%,#1e0505 45%,#080003 100%);
-}
-#locks .vbg{
-  background:
-    radial-gradient(ellipse 75% 55% at 50% 35%,rgba(28,22,8,.6) 0%,transparent 70%),
-    linear-gradient(165deg,#080500 0%,#1a1400 45%,#050400 100%);
-}
-#olde .vbg{
-  background:
-    radial-gradient(ellipse 75% 55% at 50% 35%,rgba(5,30,18,.65) 0%,transparent 70%),
-    linear-gradient(165deg,#000a05 0%,#001a0d 45%,#000805 100%);
-}
-#fruitvale .vbg{
-  background:
-    radial-gradient(ellipse 75% 55% at 50% 35%,rgba(80,28,4,.55) 0%,transparent 70%),
-    linear-gradient(165deg,#110700 0%,#2c1100 45%,#090600 100%);
-}
-#wakanda .vbg{
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 30%,rgba(28,4,75,.6) 0%,transparent 70%),
-    linear-gradient(165deg,#03000d 0%,#100028 45%,#000a14 100%);
-}
-#eightmin .vbg{
-  background:
-    radial-gradient(ellipse 75% 55% at 50% 35%,rgba(4,35,55,.6) 0%,transparent 70%),
-    linear-gradient(165deg,#00080f 0%,#001a2e 45%,#04000a 100%);
-}
-
-
 /* ══════════════════════════════
    RESUME
 ══════════════════════════════ */
@@ -309,11 +296,11 @@ section{
 
 <!-- ════════════════════ HERO ════════════════════ -->
 <section id="hero">
-  <div class="vbg"></div>
-  <div class="grain"></div>
+  <div class="yt-wrap">
+    <iframe src="https://www.youtube.com/embed/8bazm94OLZg?autoplay=1&mute=1&loop=1&playlist=8bazm94OLZg&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
   <div class="fade-up"></div>
   <div class="hero-light"></div>
-  <div class="vid-label">Full Reel Video Placeholder</div>
 
   <div class="hero-name">
     <h1>Trestin<br>George</h1>
@@ -329,10 +316,10 @@ section{
 
 <!-- ════════════════════ FRUITVALE STATION ════════════════════ -->
 <section id="fruitvale">
-  <div class="vbg"></div>
-  <div class="grain"></div>
+  <div class="yt-wrap">
+    <iframe src="https://www.youtube.com/embed/ZxUJwJfcQaQ?autoplay=1&mute=1&loop=1&playlist=ZxUJwJfcQaQ&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
   <div class="fade-up"></div>
-  <div class="vid-label">Fruitvale Station — Clip Placeholder</div>
 
   <div class="film-overlay">
 
@@ -388,10 +375,10 @@ section{
 
 <!-- ════════════════════ WAKANDA FOREVER ════════════════════ -->
 <section id="wakanda">
-  <div class="vbg"></div>
-  <div class="grain"></div>
+  <div class="yt-wrap">
+    <iframe src="https://www.youtube.com/embed/_Z3QKkl1WyM?autoplay=1&mute=1&loop=1&playlist=_Z3QKkl1WyM&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
   <div class="fade-up"></div>
-  <div class="vid-label">Black Panther: Wakanda Forever — Clip Placeholder</div>
 
   <div class="film-overlay">
 
@@ -431,10 +418,10 @@ section{
 
 <!-- ════════════════════ SEVEN MINUTES TO CLOSING ════════════════════ -->
 <section id="eightmin">
-  <div class="vbg"></div>
-  <div class="grain"></div>
+  <div class="yt-wrap">
+    <iframe src="https://www.youtube.com/embed/BvXqvh7kdv4?autoplay=1&mute=1&loop=1&playlist=BvXqvh7kdv4&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
   <div class="fade-up"></div>
-  <div class="vid-label">Seven Minutes to Closing — Clip Placeholder</div>
 
   <div class="film-overlay">
 
@@ -518,10 +505,10 @@ section{
 
 <!-- ════════════════════ FREAKY TALES ════════════════════ -->
 <section id="freakytales">
-  <div class="vbg"></div>
-  <div class="grain"></div>
+  <div class="yt-wrap">
+    <iframe src="https://www.youtube.com/embed/8bazm94OLZg?autoplay=1&mute=1&loop=1&playlist=8bazm94OLZg&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=5" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
   <div class="fade-up"></div>
-  <div class="vid-label">Freaky Tales — Clip Placeholder</div>
 
   <div class="film-overlay">
 
@@ -562,10 +549,10 @@ section{
 
 <!-- ════════════════════ LOCKS ════════════════════ -->
 <section id="locks">
-  <div class="vbg"></div>
-  <div class="grain"></div>
+  <div class="yt-wrap">
+    <iframe src="https://www.youtube.com/embed/Qt2M43wZuOE?autoplay=1&mute=1&loop=1&playlist=Qt2M43wZuOE&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
   <div class="fade-up"></div>
-  <div class="vid-label">Locks — Clip Placeholder</div>
 
   <div class="film-overlay">
 
@@ -601,10 +588,10 @@ section{
 
 <!-- ════════════════════ OLD E ════════════════════ -->
 <section id="olde">
-  <div class="vbg"></div>
-  <div class="grain"></div>
+  <div class="yt-wrap">
+    <iframe src="https://www.youtube.com/embed/Tr_eU7-Eh4M?autoplay=1&mute=1&loop=1&playlist=Tr_eU7-Eh4M&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
   <div class="fade-up"></div>
-  <div class="vid-label">Old E — Clip Placeholder</div>
 
   <div class="film-overlay">
 
