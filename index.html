@@ -215,14 +215,16 @@ section{
 }
 .resume-photo{
   position:absolute;inset:0;z-index:1;
-  background:
-    linear-gradient(to right,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 42%,rgba(0,0,0,.08) 100%),
-    url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQynAfIO_dtXUTOOwS_rZyz9Fs4iCAQ4-VeLcGGdpMW6HBNsZKHj-YmdR2Z6--6e1Ts0qygRMPdKh1MWn_TN7hzES2OcxImgvFSaZ1xtw&s=10') center/cover no-repeat;
+  background-color:#000;
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,.9) 0%, rgba(0,0,0,.55) 28%, rgba(0,0,0,0) 52%),
+    url('https://breakdownservices.s3.amazonaws.com/media/photos/20216/1905454/print/E339FF7E-3B9B-4108-AFC93B79FDF42385.jpg');
+  background-size: auto 100%;
+  background-position: center right;
+  background-repeat: no-repeat;
   overflow:hidden;
 }
-.resume-photo::after{
-  content:'';
-}
+.resume-photo::after{ content:''; }
 
 .resume-text{
   position:absolute;left:5.5vw;top:50%;
