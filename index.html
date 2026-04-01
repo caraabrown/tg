@@ -264,24 +264,16 @@ section{
   color:rgba(255,255,255,.18);margin-bottom:.6rem;font-weight:400;
   border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:.4rem;
 }
-/* Single line per credit: Title  ·  Role  ·  Year */
 .r-credit{
-  display:block;
-  font-size:.62rem;font-weight:300;
-  color:rgba(255,255,255,.72);
+  display:flex;align-items:baseline;gap:0;
   margin-bottom:.32rem;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  max-width:480px;
 }
-.r-credit .rc-r{
-  color:rgba(255,255,255,.35);
-}
-.r-credit .rc-r::before{content:' · '}
-.r-credit .rc-y{
-  color:rgba(255,255,255,.22);
-}
-.r-credit .rc-y:not(:empty)::before{content:' · '}
+.rc-t{font-size:.62rem;font-weight:300;color:rgba(255,255,255,.75);width:200px;flex-shrink:0}
+.rc-r{font-size:.58rem;color:rgba(255,255,255,.35);width:160px;flex-shrink:0}
+.rc-y{font-size:.58rem;color:rgba(255,255,255,.22);width:40px;flex-shrink:0}
+.r-credit .rc-r::before{content:''}
+.r-credit .rc-y:not(:empty)::before{content:''}
 
 
 /* ── KEYFRAMES ── */
