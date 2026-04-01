@@ -214,61 +214,74 @@ section{
 /* ══════════════════════════════
    RESUME
 ══════════════════════════════ */
-#resume .vbg{
-  background:linear-gradient(165deg,#040408 0%,#08080f 50%,#040407 100%);
-}
+#resume{background:#000}
 .resume-photo{
   position:absolute;inset:0;z-index:1;
   background-color:#000;
+  /* Image sits centered, natural size, fades into black on all sides */
   background-image:
-    linear-gradient(to right, rgba(0,0,0,.9) 0%, rgba(0,0,0,.55) 28%, rgba(0,0,0,0) 52%),
-    url('https://breakdownservices.s3.amazonaws.com/media/photos/20216/1905454/print/E339FF7E-3B9B-4108-AFC93B79FDF42385.jpg');
-  background-size: auto 100%;
-  background-position: center right;
+    radial-gradient(ellipse 55% 90% at 62% 50%, transparent 30%, rgba(0,0,0,.7) 65%, #000 100%),
+    url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQynAfIO_dtXUTOOwS_rZyz9Fs4iCAQ4-VeLcGGdpMW6HBNsZKHj-YmdR2Z6--6e1Ts0qygRMPdKh1MWn_TN7hzES2OcxImgvFSaZ1xtw&s=10');
+  background-size: auto 88%;
+  background-position: 62% center;
   background-repeat: no-repeat;
-  overflow:hidden;
 }
 .resume-photo::after{ content:''; }
 
+/* Single-column text overlay, left side */
 .resume-text{
-  position:absolute;left:5.5vw;top:50%;
+  position:absolute;
+  left:5vw;top:50%;
   transform:translateY(-50%) translateX(-18px);
-  z-index:10;width:40%;
+  z-index:10;
+  width:52vw;
   opacity:0;
-  transition:opacity 1.6s cubic-bezier(.22,1,.36,1) .2s,
-             transform 1.6s cubic-bezier(.22,1,.36,1) .2s;
+  transition:opacity 4s cubic-bezier(.16,1,.3,1),
+             transform 4s cubic-bezier(.16,1,.3,1);
 }
 .resume-text.in{opacity:1;transform:translateY(-50%) translateX(0)}
 
 .r-name{
-  font-size:clamp(1.6rem,2.4vw,3rem);font-weight:200;
-  letter-spacing:.12em;color:#fff;margin-bottom:.4rem;
+  font-size:clamp(1.8rem,2.8vw,3.4rem);font-weight:200;
+  letter-spacing:.1em;color:#fff;margin-bottom:.35rem;
 }
 .r-union{
-  font-size:.52rem;letter-spacing:.45em;text-transform:uppercase;
-  color:rgba(255,255,255,.28);margin-bottom:2.4rem;
+  font-size:.5rem;letter-spacing:.42em;text-transform:uppercase;
+  color:rgba(255,255,255,.28);margin-bottom:1.8rem;
 }
-.r-rule{width:32px;height:1px;background:rgba(255,255,255,.14);margin-bottom:2.2rem}
+.r-rule{width:32px;height:1px;background:rgba(255,255,255,.14);margin-bottom:1.6rem}
 
-.r-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem}
+.r-stats{display:flex;gap:2rem;margin-bottom:1.8rem}
 .r-stat label{
-  display:block;font-size:.42rem;letter-spacing:.45em;
-  text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:.3rem;
+  display:block;font-size:.4rem;letter-spacing:.42em;
+  text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:.2rem;
 }
-.r-stat span{font-size:.68rem;font-weight:300;color:rgba(255,255,255,.52)}
+.r-stat span{font-size:.62rem;font-weight:300;color:rgba(255,255,255,.5)}
 
-.r-sec{margin-bottom:1.7rem}
+.r-sec{margin-bottom:1.2rem}
 .r-sec-head{
-  font-size:.44rem;letter-spacing:.55em;text-transform:uppercase;
-  color:rgba(255,255,255,.2);margin-bottom:.9rem;font-weight:400;
+  font-size:.4rem;letter-spacing:.55em;text-transform:uppercase;
+  color:rgba(255,255,255,.18);margin-bottom:.6rem;font-weight:400;
+  border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:.4rem;
 }
+/* Single line per credit: Title  ·  Role  ·  Year */
 .r-credit{
-  display:flex;justify-content:space-between;align-items:baseline;
-  margin-bottom:.48rem;gap:1rem;
+  display:block;
+  font-size:.62rem;font-weight:300;
+  color:rgba(255,255,255,.72);
+  margin-bottom:.32rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-.rc-t{font-size:.68rem;font-weight:300;color:rgba(255,255,255,.78);flex:1;min-width:0}
-.rc-r{font-size:.55rem;color:rgba(255,255,255,.33);white-space:nowrap}
-.rc-y{font-size:.55rem;color:rgba(255,255,255,.2);white-space:nowrap;min-width:2.8rem;text-align:right}
+.r-credit .rc-r{
+  color:rgba(255,255,255,.35);
+}
+.r-credit .rc-r::before{content:' · '}
+.r-credit .rc-y{
+  color:rgba(255,255,255,.22);
+}
+.r-credit .rc-y:not(:empty)::before{content:' · '}
 
 
 /* ── KEYFRAMES ── */
