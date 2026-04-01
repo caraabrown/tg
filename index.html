@@ -685,15 +685,30 @@ section{
 
 
 <script>
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.querySelectorAll('[data-obs]').forEach(el => el.classList.add('in'));
-      }
-    });
-  }, { threshold: 0.3 });
+  const sections = Array.from(document.querySelectorAll('section'));
 
-  document.querySelectorAll('section').forEach(s => io.observe(s));
+  function activate(section) {
+    section.querySelectorAll('[data-obs]').forEach((el, i) => {
+      setTimeout(() => el.classList.add('in'), i * 180);
+    });
+  }
+
+  function checkSnap() {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const vh = window.innerHeight;
+    sections.forEach(s => {
+      const top = s.getBoundingClientRect().top;
+      // Consider "in view" when less than half a viewport off-screen
+      if (top > -vh * 0.5 && top < vh * 0.5) activate(s);
+    });
+  }
+
+  // Run on load for first section
+  checkSnap();
+
+  // Run on every scroll
+  (document.scrollingElement || document.documentElement).addEventListener('scroll', checkSnap, { passive: true });
+  window.addEventListener('scroll', checkSnap, { passive: true });
 </script>
 </body>
 </html>
