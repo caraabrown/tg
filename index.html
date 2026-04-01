@@ -174,9 +174,9 @@ section{
 
 /* Film text */
 .film-info{
-  opacity:0;transform:translateY(32px);
-  transition:opacity 1.6s cubic-bezier(.22,1,.36,1) .1s,
-             transform 1.6s cubic-bezier(.22,1,.36,1) .1s;
+  opacity:0;transform:translateY(22px);
+  transition:opacity 4s cubic-bezier(.16,1,.3,1),
+             transform 4s cubic-bezier(.16,1,.3,1);
   max-width:70%;
 }
 .film-info.in{opacity:1;transform:translateY(0)}
@@ -202,9 +202,9 @@ section{
 /* Awards — below text, horizontal row */
 .film-badges{
   display:flex;flex-direction:row;align-items:flex-end;gap:1.8rem;
-  opacity:0;transform:translateY(24px);
-  transition:opacity 1.6s cubic-bezier(.22,1,.36,1) .45s,
-             transform 1.6s cubic-bezier(.22,1,.36,1) .45s;
+  opacity:0;transform:translateY(18px);
+  transition:opacity 3.5s cubic-bezier(.16,1,.3,1),
+             transform 3.5s cubic-bezier(.16,1,.3,1);
 }
 .film-badges.in{opacity:1;transform:translateY(0)}
 
@@ -303,7 +303,7 @@ section{
 <!-- ════════════════════ HERO ════════════════════ -->
 <section id="hero">
   <div class="yt-wrap">
-    <iframe src="https://www.youtube.com/embed/BvXqvh7kdv4?autoplay=1&mute=1&loop=1&playlist=BvXqvh7kdv4&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=5" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/BvXqvh7kdv4?autoplay=1&mute=1&loop=1&playlist=BvXqvh7kdv4&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=6" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <div class="fade-up"></div>
   <div class="hero-light"></div>
@@ -323,7 +323,7 @@ section{
 <!-- ════════════════════ FRUITVALE STATION ════════════════════ -->
 <section id="fruitvale">
   <div class="yt-wrap">
-    <iframe src="https://www.youtube.com/embed/mZ2W1xBnCUY?autoplay=1&mute=1&loop=1&playlist=mZ2W1xBnCUY&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=20" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/mZ2W1xBnCUY?autoplay=1&mute=1&loop=1&playlist=mZ2W1xBnCUY&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=18" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <div class="fade-up"></div>
 
@@ -692,28 +692,35 @@ section{
 
 <script>
   const sections = Array.from(document.querySelectorAll('section'));
+  const activated = new Set();
 
   function activate(section) {
-    section.querySelectorAll('[data-obs]').forEach((el, i) => {
-      setTimeout(() => el.classList.add('in'), i * 180);
-    });
+    if (activated.has(section)) return;
+    activated.add(section);
+
+    const info   = section.querySelector('.film-info, .resume-text');
+    const badges = section.querySelector('.film-badges');
+
+    // 3 second hold — let the video breathe
+    if (info)   setTimeout(() => info.classList.add('in'),   3000);
+    // badges fade in 1.5s after the text starts
+    if (badges) setTimeout(() => badges.classList.add('in'), 4500);
   }
 
   function checkSnap() {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     const vh = window.innerHeight;
     sections.forEach(s => {
       const top = s.getBoundingClientRect().top;
-      // Consider "in view" when less than half a viewport off-screen
-      if (top > -vh * 0.5 && top < vh * 0.5) activate(s);
+      // section is "snapped in" when it's nearly centered
+      if (top > -vh * 0.25 && top < vh * 0.25) activate(s);
     });
   }
 
-  // Run on load for first section
-  checkSnap();
-
-  // Run on every scroll
-  (document.scrollingElement || document.documentElement).addEventListener('scroll', checkSnap, { passive: true });
+  // Hero: fire immediately on load (no scroll needed)
+  window.addEventListener('load', checkSnap);
+  // All other sections: fire on scroll
+  (document.scrollingElement || document.documentElement)
+    .addEventListener('scroll', checkSnap, { passive: true });
   window.addEventListener('scroll', checkSnap, { passive: true });
 </script>
 </body>
