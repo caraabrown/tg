@@ -221,7 +221,7 @@ section{
   /* Image sits centered, natural size, fades into black on all sides */
   background-image:
     radial-gradient(ellipse 55% 90% at 62% 50%, transparent 30%, rgba(0,0,0,.7) 65%, #000 100%),
-    url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQynAfIO_dtXUTOOwS_rZyz9Fs4iCAQ4-VeLcGGdpMW6HBNsZKHj-YmdR2Z6--6e1Ts0qygRMPdKh1MWn_TN7hzES2OcxImgvFSaZ1xtw&s=10');
+    url('https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/66/Trestin_George.jpg/revision/latest?cb=20230213231750');
   background-size: auto 88%;
   background-position: 62% center;
   background-repeat: no-repeat;
@@ -308,7 +308,7 @@ section{
 <!-- ════════════════════ HERO ════════════════════ -->
 <section id="hero">
   <div class="yt-wrap">
-    <iframe src="https://www.youtube.com/embed/BvXqvh7kdv4?autoplay=1&mute=1&loop=1&playlist=BvXqvh7kdv4&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=6" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/BvXqvh7kdv4?autoplay=1&mute=1&loop=1&playlist=BvXqvh7kdv4&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=8" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <div class="fade-up"></div>
   <div class="hero-light"></div>
@@ -436,7 +436,7 @@ section{
 <!-- ════════════════════ SEVEN MINUTES TO CLOSING ════════════════════ -->
 <section id="eightmin">
   <div class="yt-wrap">
-    <iframe src="https://www.youtube.com/embed/BvXqvh7kdv4?autoplay=1&mute=1&loop=1&playlist=BvXqvh7kdv4&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/BvXqvh7kdv4?autoplay=1&mute=1&loop=1&playlist=BvXqvh7kdv4&controls=0&rel=0&modestbranding=1&playsinline=1&showinfo=0&start=2" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <div class="fade-up"></div>
 
@@ -721,8 +721,7 @@ section{
     });
   }
 
-  // Hero: fire immediately on load (no scroll needed)
-  window.addEventListener('load', checkSnap);
+  // Fire on scroll only — no auto-trigger on load
   // All other sections: fire on scroll
   (document.scrollingElement || document.documentElement)
     .addEventListener('scroll', checkSnap, { passive: true });
